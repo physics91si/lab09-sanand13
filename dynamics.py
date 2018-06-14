@@ -9,22 +9,30 @@ import matplotlib.animation as animation
 
 # Modules you will need
 import numpy as np
-import particle
+import particle as par
+import molecule as mol
 
 # TODO: Implement this function
 def init_molecule():
     """Create Particles p1 and p2 inside boundaries and return a molecule
     connecting them"""
-
-    pass
-
+    p1 = par.Particle(np.asarray([0.2,0.2]),10)
+    p2 = par.Particle(np.asarray([0.8,0.8]),2)
+    m = mol.molecule(p1.pos,p2.pos,p1.m,p2.m,1,0.5)
+    return m
 
 # TODO: Implement this function
 def time_step(dt, mol):
     """Sets new positions and velocities of the particles attached to mol"""
-    
-    pass
-
+    #print(mol.get_force())
+    mol.p1.vel[0] += mol.get_force()[0]*(dt/2.0)/float(mol.p1.m) 
+    mol.p1.vel[1] += mol.get_force()[1]*(dt/2.0)/float(mol.p1.m) 
+    mol.p1.pos[0] += mol.p1.vel[0]*dt 
+    mol.p1.pos[1] += mol.p1.vel[1]*dt 
+    mol.p2.vel[0] -= mol.get_force()[0]*(dt/2.0)/float(mol.p2.m) 
+    mol.p2.vel[1] -= mol.get_force()[1]*(dt/2.0)/float(mol.p2.m) 
+    mol.p2.pos[0] += mol.p2.vel[0]*dt 
+    mol.p2.pos[1] += mol.p2.vel[1]*dt 
 
 #############################################
 # The rest of the file is already implemented
